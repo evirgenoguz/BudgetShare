@@ -5,8 +5,8 @@ package com.evirgenoguz.spendtogether.data.model.request
  * @Date: 12.07.2023
  */
 
-data class RegisterRequestModel(
+data class UserRequest(
     val fullName: String,
     val email: String,
-    val password: String,
+    val groups: List<String>? = null
 )

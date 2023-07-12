@@ -23,4 +23,5 @@
 
     <!-- Login -->
     <string name="register_do_you_have_an_account">Do you have an account?\t</string>
+    <string name="fullname">Fullname</string>
 </resources>

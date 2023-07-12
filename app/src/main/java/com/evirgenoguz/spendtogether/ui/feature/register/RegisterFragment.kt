@@ -11,6 +11,7 @@ import com.evirgenoguz.spendtogether.data.NetworkResult
 import com.evirgenoguz.spendtogether.data.model.request.RegisterRequestModel
 import com.evirgenoguz.spendtogether.databinding.FragmentRegisterBinding
 import com.evirgenoguz.spendtogether.ext.observeLiveData
+import com.evirgenoguz.spendtogether.ext.toast
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -42,6 +43,7 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>() {
                         ).show()
                     }
                     is NetworkResult.Error -> {
+                        toast(it.error.message)
                         Log.e("Register Fragment", it.error.message)
                     }
                 }
@@ -52,6 +54,7 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>() {
     private fun initListeners() {
         binding.apply {
             buttonRegister.setOnClickListener {
+
                 register()
             }
             tvLogin.setOnClickListener {
@@ -63,9 +66,11 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>() {
     private fun register() {
         binding.apply {
             val registerRequestModel = RegisterRequestModel(
+                tietFullName.text.toString().trim(),
                 tietEmail.text.toString().trim(),
                 tietPassword.text.toString().trim()
             )
+            viewModel.register(registerRequestModel)
         }
     }
 

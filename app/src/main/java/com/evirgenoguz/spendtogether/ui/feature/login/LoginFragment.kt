@@ -11,6 +11,7 @@ import com.evirgenoguz.spendtogether.data.NetworkResult
 import com.evirgenoguz.spendtogether.data.model.request.LoginRequestModel
 import com.evirgenoguz.spendtogether.databinding.FragmentLoginBinding
 import com.evirgenoguz.spendtogether.ext.observeLiveData
+import com.evirgenoguz.spendtogether.ext.toast
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
