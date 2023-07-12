@@ -8,7 +8,7 @@ import com.evirgenoguz.spendtogether.data.NetworkResult
 import com.evirgenoguz.spendtogether.data.ServerErrorModel
 import com.evirgenoguz.spendtogether.data.local.SharedPrefManager
 import com.evirgenoguz.spendtogether.data.model.request.RegisterRequestModel
-import com.evirgenoguz.spendtogether.data.model.request.UserRequest
+import com.evirgenoguz.spendtogether.data.model.request.UserRequestModel
 import com.evirgenoguz.spendtogether.data.model.response.RegisterResponseModel
 import com.evirgenoguz.spendtogether.data.repository.AuthRepository
 import com.evirgenoguz.spendtogether.utils.Constants.USER_COLLECTION
@@ -36,7 +36,7 @@ class RegisterViewModel @Inject constructor(
             authRepository.register(registerRequestModel)
                 .addOnSuccessListener { authResult ->
                     authResult.user?.uid?.let { uid ->
-                        saveUserInfo(uid, UserRequest(registerRequestModel.fullName, registerRequestModel.email))
+                        saveUserInfo(uid, UserRequestModel(registerRequestModel.fullName, registerRequestModel.email))
                     } ?:run {
                         _register.postValue(
                             NetworkResult.Error(
@@ -59,7 +59,7 @@ class RegisterViewModel @Inject constructor(
         }
     }
 
-    private fun saveUserInfo(userUid: String, user: UserRequest){
+    private fun saveUserInfo(userUid: String, user: UserRequestModel){
         fireStore.collection(USER_COLLECTION)
             .document(userUid)
             .set(user)
