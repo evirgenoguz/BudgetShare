@@ -7,7 +7,4 @@ package com.evirgenoguz.spendtogether.utils
 
 object Constants {
     const val BASE_URL = "https://www.sampleapi.com/"
-
-    const val USER_COLLECTION = "user"
-
 }

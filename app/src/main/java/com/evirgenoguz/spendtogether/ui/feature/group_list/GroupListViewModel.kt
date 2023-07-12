@@ -10,6 +10,7 @@ import com.evirgenoguz.spendtogether.data.ServerErrorModel
 import com.evirgenoguz.spendtogether.data.local.SharedPrefManager
 import com.evirgenoguz.spendtogether.data.model.request.CreateGroupRequestModel
 import com.evirgenoguz.spendtogether.data.model.response.GroupResponseModel
+import com.evirgenoguz.spendtogether.data.model.response.UserResponseModel
 import com.evirgenoguz.spendtogether.data.repository.FirestoreRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -26,8 +27,31 @@ class GroupListViewModel @Inject constructor(
     val groups: LiveData<NetworkResult<GroupResponseModel>> = _groups
 
 
+    private val _user = MutableLiveData<NetworkResult<UserResponseModel>>()
+    val user: LiveData<NetworkResult<UserResponseModel>> = _user
+
     init {
+        getUser(sharedPrefManager.getUId())
         getGroupsByUserUid(sharedPrefManager.getUId())
+    }
+    private fun getUser(userUid: String) {
+        viewModelScope.launch {
+            _user.postValue(NetworkResult.Loading)
+            firestoreRepository.getUser(userUid).addOnSuccessListener { document ->
+                Log.d("Deneme", document.data?.get("fullName").toString())
+                _user.postValue(
+                    NetworkResult.Success(
+                        UserResponseModel(
+                            fullName = document.data?.get(
+                                "fullName"
+                            ).toString(), email = document.data?.get("email").toString()
+                        )
+                    )
+                )
+            }.addOnFailureListener {
+
+            }
+        }
     }
 
     fun createGroup(createGroupRequestModel: CreateGroupRequestModel) {

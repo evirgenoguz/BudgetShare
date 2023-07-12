@@ -11,7 +11,7 @@ import com.evirgenoguz.spendtogether.data.model.request.RegisterRequestModel
 import com.evirgenoguz.spendtogether.data.model.request.UserRequestModel
 import com.evirgenoguz.spendtogether.data.model.response.RegisterResponseModel
 import com.evirgenoguz.spendtogether.data.repository.AuthRepository
-import com.evirgenoguz.spendtogether.utils.Constants.USER_COLLECTION
+import com.evirgenoguz.spendtogether.data.repository.FirestoreRepository.Companion.USER_COLLECTION
 import com.google.firebase.firestore.FirebaseFirestore
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch

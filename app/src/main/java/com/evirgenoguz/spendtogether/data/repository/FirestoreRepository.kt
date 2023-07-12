@@ -4,6 +4,7 @@ import com.evirgenoguz.spendtogether.data.model.request.CreateGroupRequestModel
 import com.evirgenoguz.spendtogether.data.service.FirestoreService
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
 import javax.inject.Inject
@@ -16,6 +17,11 @@ import javax.inject.Inject
 class FirestoreRepository @Inject constructor(
     private val fireStore: FirebaseFirestore
 ) : FirestoreService {
+
+    override fun getUser(userUid: String): Task<DocumentSnapshot> {
+        return fireStore.collection(USER_COLLECTION).document(userUid).get()
+    }
+
     override fun getGroupsByUserUid(userUid: String): Task<QuerySnapshot> {
         val query = fireStore.collection(COLLECTION_GROUP)
             .whereArrayContains("memberList", userUid)
@@ -37,6 +43,7 @@ class FirestoreRepository @Inject constructor(
 
     companion object {
         const val COLLECTION_GROUP = "group"
+        const val USER_COLLECTION = "user"
     }
 
 }
