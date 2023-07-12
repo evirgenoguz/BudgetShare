@@ -5,5 +5,14 @@
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
 
+
+
+    <style name="Base.Theme.SpendTogether.SplashScreen" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenIconBackgroundColor">@color/white_smoke</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_money</item>
+        <item name="postSplashScreenTheme">@style/Theme.SpendTogether</item>
+    </style>
+
     <style name="Theme.SpendTogether" parent="Base.Theme.SpendTogether" />
+    <style name="Theme.SpendTogether.SplashScreen" parent="Base.Theme.SpendTogether.SplashScreen"/>
 </resources>

@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.evirgenoguz.spendtogether.core.BaseViewModel
 import com.evirgenoguz.spendtogether.data.NetworkResult
 import com.evirgenoguz.spendtogether.data.ServerErrorModel
+import com.evirgenoguz.spendtogether.data.local.SharedPrefManager
 import com.evirgenoguz.spendtogether.data.model.request.RegisterRequestModel
 import com.evirgenoguz.spendtogether.data.model.request.UserRequest
 import com.evirgenoguz.spendtogether.data.model.response.RegisterResponseModel
@@ -19,12 +20,15 @@ import javax.inject.Inject
 @HiltViewModel
 class RegisterViewModel @Inject constructor(
     private val authRepository: AuthRepository,
-    private val fireStore: FirebaseFirestore
+    private val fireStore: FirebaseFirestore,
+    private val sharedPrefManager: SharedPrefManager
 ) : BaseViewModel() {
 
 
     private val _register = MutableLiveData<NetworkResult<RegisterResponseModel>>()
     val register: LiveData<NetworkResult<RegisterResponseModel>> = _register
+
+
 
     fun register(registerRequestModel: RegisterRequestModel) {
         viewModelScope.launch {
@@ -33,7 +37,8 @@ class RegisterViewModel @Inject constructor(
                 .addOnSuccessListener { authResult ->
                     authResult.user?.uid?.let { uid ->
                         saveUserInfo(uid, UserRequest(registerRequestModel.fullName, registerRequestModel.email))
-                    } ?: kotlin.run {
+                        sharedPrefManager.setUId(uid)
+                    } ?:run {
                         _register.postValue(
                             NetworkResult.Error(
                                 ServerErrorModel(

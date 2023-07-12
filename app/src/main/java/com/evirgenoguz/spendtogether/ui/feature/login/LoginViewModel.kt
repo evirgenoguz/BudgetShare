@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.evirgenoguz.spendtogether.core.BaseViewModel
 import com.evirgenoguz.spendtogether.data.NetworkResult
 import com.evirgenoguz.spendtogether.data.ServerErrorModel
+import com.evirgenoguz.spendtogether.data.local.SharedPrefManager
 import com.evirgenoguz.spendtogether.data.model.request.LoginRequestModel
 import com.evirgenoguz.spendtogether.data.model.response.LoginResponseModel
 import com.evirgenoguz.spendtogether.data.repository.AuthRepository
@@ -16,19 +17,21 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val authRepository: AuthRepository
+    private val authRepository: AuthRepository,
+    private val sharedPrefManager: SharedPrefManager
 ) : BaseViewModel() {
 
     private val _login = MutableLiveData<NetworkResult<LoginResponseModel>>()
     val login: LiveData<NetworkResult<LoginResponseModel>> = _login
 
-    fun login(loginRequestModel: LoginRequestModel) {
+     fun login(loginRequestModel: LoginRequestModel) {
         viewModelScope.launch {
             _login.postValue(NetworkResult.Loading)
             authRepository.login(loginRequestModel)
                 .addOnSuccessListener { authResult ->
                     authResult.user?.let { user ->
                         val uid = user.uid
+                        sharedPrefManager.setUId(user.uid)
                         _login.postValue(NetworkResult.Success(LoginResponseModel(uid = uid)))
                     } ?: kotlin.run {
                         _login.postValue(
@@ -52,4 +55,6 @@ class LoginViewModel @Inject constructor(
         }
         Patterns.EMAIL_ADDRESS
     }
+
+
 }
