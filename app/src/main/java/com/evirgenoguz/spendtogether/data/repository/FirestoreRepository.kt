@@ -5,8 +5,8 @@ import com.evirgenoguz.spendtogether.data.service.FirestoreService
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.QuerySnapshot
 import javax.inject.Inject
 
 /**
@@ -22,16 +22,26 @@ class FirestoreRepository @Inject constructor(
         return fireStore.collection(USER_COLLECTION).document(userUid).get()
     }
 
-    override fun getGroupsByUserUid(userUid: String): Task<QuerySnapshot> {
-        val query = fireStore.collection(COLLECTION_GROUP)
-            .whereArrayContains("memberList", userUid)
-
-        return query.get()
+    override fun getGroupsByUserUid(userUid: String) {
+        fireStore.collection(USER_COLLECTION).document(userUid).get()
     }
 
     override fun createGroup(createGroupRequestModel: CreateGroupRequestModel): Task<DocumentReference> {
-        return fireStore.collection(COLLECTION_GROUP)
-            .add(createGroupRequestModel)
+        var groupUid = ""
+
+        val result = fireStore.collection(COLLECTION_GROUP)
+            .add(createGroupRequestModel).addOnCompleteListener {
+                groupUid = it.result.id
+                fireStore.collection(USER_COLLECTION)
+                    .document(createGroupRequestModel.groupOwnerUid)
+                    .update(
+                        mapOf(
+                            "groups" to FieldValue.arrayUnion(groupUid)
+                        )
+                    )
+            }
+
+        return result
     }
 
     override fun deleteGroup(groupUid: String) {

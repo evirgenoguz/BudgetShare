@@ -3,6 +3,7 @@ package com.evirgenoguz.spendtogether.ui.feature.profile
 import android.view.LayoutInflater
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.evirgenoguz.spendtogether.core.BaseFragment
 import com.evirgenoguz.spendtogether.databinding.FragmentProfileBinding
 import com.evirgenoguz.spendtogether.ui.MainViewModel
@@ -21,9 +22,19 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
             binding.textViewEmail.text = it.email
             binding.textViewUserName.text = it.fullName
         }
+
+        initListeners()
     }
 
+    private fun initListeners() {
+        binding.apply {
+            buttonLogout.setOnClickListener {
+                viewModel.logout()
+                findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToStartFragment())
 
+            }
+        }
+    }
 
 
 }

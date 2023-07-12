@@ -52,7 +52,8 @@ class GroupListFragment : BaseFragment<FragmentGroupListBinding>() {
 
 
         binding.fabAddGroup.setOnClickListener {
-            viewModel.createGroup(CreateGroupRequestModel("test", "94hEp6GFRQTKPLCCSY4QbUTpxAx2"))
+
+            viewModel.createGroup(CreateGroupRequestModel("test", "f5zKj8ycoUgnbOPddbSIsdHDBf22"))
         }
     }
 

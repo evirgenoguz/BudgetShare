@@ -8,5 +8,4 @@ package com.evirgenoguz.spendtogether.data.model.request
 data class CreateGroupRequestModel(
     val groupName: String,
     val groupOwnerUid: String,
-    val memberList: List<String>? = mutableListOf(groupOwnerUid)
 )

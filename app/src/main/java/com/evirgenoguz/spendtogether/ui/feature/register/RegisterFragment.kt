@@ -40,6 +40,7 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>() {
                         if (binding.checkBoxKeepMeLoggedIn.isChecked) {
                             viewModel.saveUserUidToSharedPref(it.body.uid)
                         }
+                        findNavController().navigate(RegisterFragmentDirections.actionRegisterFragmentToGroupListFragment())
                         Toast.makeText(
                             context,
                             "${it.body.uid} successfully auth",

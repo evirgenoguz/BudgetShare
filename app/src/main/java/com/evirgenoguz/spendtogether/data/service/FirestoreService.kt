@@ -4,7 +4,6 @@ import com.evirgenoguz.spendtogether.data.model.request.CreateGroupRequestModel
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.DocumentSnapshot
-import com.google.firebase.firestore.QuerySnapshot
 
 /**
  * @Author: Oguz Evirgen
@@ -14,7 +13,7 @@ import com.google.firebase.firestore.QuerySnapshot
 interface FirestoreService {
 
     fun getUser(userUid: String): Task<DocumentSnapshot>
-    fun getGroupsByUserUid(userUid: String): Task<QuerySnapshot>
+    fun getGroupsByUserUid(userUid: String)
     fun createGroup(createGroupRequestModel: CreateGroupRequestModel): Task<DocumentReference>
 
     fun deleteGroup(groupUid: String)
