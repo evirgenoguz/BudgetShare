@@ -31,10 +31,10 @@ fun Activity.toast(@StringRes message: Int) {
 /**
  * It finds the NavController of FragmentContainerView object which has passed id.
  */
-//fun AppCompatActivity.findNavController(
-//    @IdRes id: Int = R.id.nav_host_fragment_content
-//): NavController {
-//    val hostFragment = supportFragmentManager.findFragmentById(id)
-//            as NavHostFragment
-//    return hostFragment.navController
-//}
+fun AppCompatActivity.findNavController(
+    @IdRes id: Int = R.id.nav_host_fragment_content
+): NavController {
+    val hostFragment = supportFragmentManager.findFragmentById(id)
+            as NavHostFragment
+    return hostFragment.navController
+}
