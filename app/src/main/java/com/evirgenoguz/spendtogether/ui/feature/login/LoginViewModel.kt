@@ -31,7 +31,6 @@ class LoginViewModel @Inject constructor(
                 .addOnSuccessListener { authResult ->
                     authResult.user?.let { user ->
                         val uid = user.uid
-                        sharedPrefManager.setUId(user.uid)
                         _login.postValue(NetworkResult.Success(LoginResponseModel(uid = uid)))
                     } ?: kotlin.run {
                         _login.postValue(
@@ -56,5 +55,9 @@ class LoginViewModel @Inject constructor(
         Patterns.EMAIL_ADDRESS
     }
 
+    fun saveUserUidToSharedPref(uid: String){
+        sharedPrefManager.setUId(uid)
+    }
 
+    fun getUserUidFromSharedPref() = sharedPrefManager.getUId()
 }

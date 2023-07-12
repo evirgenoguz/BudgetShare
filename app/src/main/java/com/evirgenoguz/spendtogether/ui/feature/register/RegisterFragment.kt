@@ -32,16 +32,21 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>() {
             observeLiveData(viewModel.register) {
                 when (it) {
                     is NetworkResult.Loading -> {
-
+                        //Todo loading dialog
+                        toast("Loading")
                     }
+
                     is NetworkResult.Success -> {
+                        if (binding.checkBoxKeepMeLoggedIn.isChecked) {
+                            viewModel.saveUserUidToSharedPref(it.body.uid)
+                        }
                         Toast.makeText(
                             context,
-                            //TODO: get uid and navigate to inside app
                             "${it.body.uid} successfully auth",
                             Toast.LENGTH_LONG
                         ).show()
                     }
+
                     is NetworkResult.Error -> {
                         toast(it.error.message)
                         Log.e("Register Fragment", it.error.message)

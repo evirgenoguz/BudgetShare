@@ -37,7 +37,6 @@ class RegisterViewModel @Inject constructor(
                 .addOnSuccessListener { authResult ->
                     authResult.user?.uid?.let { uid ->
                         saveUserInfo(uid, UserRequest(registerRequestModel.fullName, registerRequestModel.email))
-                        sharedPrefManager.setUId(uid)
                     } ?:run {
                         _register.postValue(
                             NetworkResult.Error(
@@ -83,5 +82,10 @@ class RegisterViewModel @Inject constructor(
             }
     }
 
+    fun saveUserUidToSharedPref(uid: String){
+        sharedPrefManager.setUId(uid)
+    }
+
+    fun getUserUidFromSharedPref() = sharedPrefManager.getUId()
 
 }
