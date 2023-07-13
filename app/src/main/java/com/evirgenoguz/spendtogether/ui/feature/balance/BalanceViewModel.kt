@@ -1,10 +1,8 @@
 package com.evirgenoguz.spendtogether.ui.feature.balance
 
-import androidx.lifecycle.ViewModel
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
+import com.evirgenoguz.spendtogether.core.BaseViewModel
 
-@HiltViewModel
-class BalanceViewModel @Inject constructor() : ViewModel() {
+
+class BalanceViewModel : BaseViewModel() {
 
 }

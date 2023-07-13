@@ -1,10 +1,8 @@
 package com.evirgenoguz.spendtogether.ui.feature.expense
 
-import androidx.lifecycle.ViewModel
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
+import com.evirgenoguz.spendtogether.core.BaseViewModel
 
-@HiltViewModel
-class ExpenseViewModel @Inject constructor() : ViewModel() {
+
+class ExpenseViewModel : BaseViewModel() {
 
 }

@@ -6,6 +6,8 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.evirgenoguz.spendtogether.core.BaseFragment
 import com.evirgenoguz.spendtogether.databinding.FragmentProfileBinding
+import com.evirgenoguz.spendtogether.ext.observeLiveData
+import com.evirgenoguz.spendtogether.ext.toast
 import com.evirgenoguz.spendtogether.ui.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -24,6 +26,24 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
         }
 
         initListeners()
+        observeCurrencyLiveData()
+
+    }
+
+    private fun observeCurrencyLiveData() {
+        observeLiveData(viewModel.currency) {
+            it.onLoading {
+                //Todo add dialog for loading
+                toast("Loading state")
+            }
+            it.onSuccess {
+                binding.apply {
+                    textViewDolar.text = "Dolar: ${it.TCMB_AnlikKurBilgileri[0]}"
+                    textViewDolar.text = "Euro: ${it.TCMB_AnlikKurBilgileri[3]}"
+                    textViewDolar.text = "Sterlin: ${it.TCMB_AnlikKurBilgileri[4]}"
+                }
+            }
+        }
     }
 
     private fun initListeners() {

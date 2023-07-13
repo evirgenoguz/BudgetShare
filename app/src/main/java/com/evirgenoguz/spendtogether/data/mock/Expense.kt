@@ -8,6 +8,7 @@ package com.evirgenoguz.spendtogether.data.mock
 data class Expense(
     val amount: Int,
     val expenseOwnerUid: String,
+    val expenseGroupUid: String,
     val description: String
 )
 
