@@ -50,7 +50,11 @@ class GroupListViewModel @Inject constructor(
                     )
                 )
             }.addOnFailureListener {
-
+                NetworkResult.Error(
+                    ServerErrorModel(
+                        it.localizedMessage ?: "An error occurred"
+                    )
+                )
             }
         }
     }
@@ -75,18 +79,28 @@ class GroupListViewModel @Inject constructor(
         val groupResponseModelList = mutableListOf<GroupResponseModel>()
         viewModelScope.launch {
             _groupList.postValue(NetworkResult.Loading)
-            val result = firestoreRepository.getGroupsByUserUid(userUid)
+            val result = firestoreRepository.getUserGroups(userUid)
             result.addOnSuccessListener { documentSnapshot ->
 
                 if (documentSnapshot.exists()) {
                     val fieldValue = documentSnapshot.get("groups") as? List<String>
                     fieldValue?.let { list ->
                         for (groupUid in list) {
-                            groupResponseModelList.add(GroupResponseModel(groupUid, "Ev"))
+                            getGroupByGroupId(groupUid)
+                            groupResponseModelList.add(GroupResponseModel(groupUid, "Ev", userUid))
                         }
                     }
                 }
                 _groupList.postValue(NetworkResult.Success(groupResponseModelList))
+            }
+        }
+    }
+
+    private fun getGroupByGroupId(groupUid: String) {
+        viewModelScope.launch {
+            val result = firestoreRepository.getGroupByGroupUid(groupUid)
+            result.addOnSuccessListener {
+
             }
         }
     }

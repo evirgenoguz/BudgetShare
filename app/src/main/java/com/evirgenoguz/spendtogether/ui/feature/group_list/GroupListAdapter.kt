@@ -25,7 +25,7 @@ class GroupListAdapter : RecyclerView.Adapter<GroupListAdapter.GroupListViewHold
         private val binding: ItemGroupBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(group: GroupResponseModel) {
-            binding.textViewGroupName.text = group.groupDescription
+            binding.textViewGroupName.text = group.groupName
 
             itemView.setOnClickListener {
                 onItemClick!!.invoke(group)
