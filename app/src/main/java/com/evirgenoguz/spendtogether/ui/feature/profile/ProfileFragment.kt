@@ -1,5 +1,6 @@
 package com.evirgenoguz.spendtogether.ui.feature.profile
 
+import android.util.Log
 import android.view.LayoutInflater
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -38,10 +39,13 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
             }
             it.onSuccess {
                 binding.apply {
-                    textViewDolar.text = "Dolar: ${it.TCMB_AnlikKurBilgileri[0]}"
-                    textViewDolar.text = "Euro: ${it.TCMB_AnlikKurBilgileri[3]}"
-                    textViewDolar.text = "Sterlin: ${it.TCMB_AnlikKurBilgileri[4]}"
+                    textViewDolar.text = "Dolar: ${it.ourData.TRY}"
+                    textViewEuro.text = "Euro: ${it.ourData.TRY / it.ourData.EUR}"
+                    textViewSterlin.text = "Sterlin: ${it.ourData.TRY / it.ourData.GBP }"
                 }
+            }
+            it.onError {
+                Log.d("Profile Fragment", it.message)
             }
         }
     }

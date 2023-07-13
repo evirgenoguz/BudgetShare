@@ -2,7 +2,6 @@ package com.evirgenoguz.spendtogether.ui.feature.expense
 
 import android.view.LayoutInflater
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import com.evirgenoguz.spendtogether.R
 import com.evirgenoguz.spendtogether.core.BaseFragment
 import com.evirgenoguz.spendtogether.databinding.FragmentExpenseBinding
@@ -18,11 +17,16 @@ class ExpenseFragment : BaseFragment<FragmentExpenseBinding>() {
     private val viewModel by viewModels<ExpenseViewModel>()
 
     private lateinit var expenseAdapter: ExpenseAdapter
+
+
     override fun setupUi() {
         initListeners()
         prepareAdapter()
         arguments?.getString("groupUid")?.let { viewModel.getExpenseByGroupUid(it) }
         observeExpenseLiveData()
+
+
+
     }
 
     private fun observeExpenseLiveData() {
@@ -49,7 +53,7 @@ class ExpenseFragment : BaseFragment<FragmentExpenseBinding>() {
             setOnMenuItemClickListener {
                 when (it.itemId) {
                     R.id.action_balance -> {
-                        findNavController().navigate(ExpenseFragmentDirections.actionExpenseFragmentToBalanceFragment())
+//                        findNavController().navigate(ExpenseFragmentDirections.actionExpenseFragmentToBalanceFragment())
                         true
                     }
 

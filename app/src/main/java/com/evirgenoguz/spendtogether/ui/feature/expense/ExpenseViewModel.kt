@@ -20,6 +20,8 @@ class ExpenseViewModel @Inject constructor(
     private val _expenseList = MutableLiveData<NetworkResult<List<Expense>>>()
     val expenseList: LiveData<NetworkResult<List<Expense>>> = _expenseList
 
+
+
     fun getExpenseByGroupUid(groupUid: String) {
         viewModelScope.launch {
             _expenseList.postValue(NetworkResult.Loading)
