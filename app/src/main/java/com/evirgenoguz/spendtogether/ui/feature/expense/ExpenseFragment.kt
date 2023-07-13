@@ -75,6 +75,10 @@ class ExpenseFragment : BaseFragment<FragmentExpenseBinding>() {
             }
             title = context.getString(R.string.expenses)
         }
+
+        binding.fabAddExpense.setOnClickListener {
+            findNavController().navigate(ExpenseFragmentDirections.actionExpenseFragmentToCreateExpenseFragment())
+        }
     }
 
 

@@ -39,13 +39,13 @@ class GroupListViewModel @Inject constructor(
         viewModelScope.launch {
             _user.postValue(NetworkResult.Loading)
             firestoreRepository.getUser(userUid).addOnSuccessListener { document ->
-                Log.d("Deneme", document.data?.get("fullName").toString())
+                Log.d("Deneme", document.data?.get("groups").toString())
                 _user.postValue(
                     NetworkResult.Success(
                         UserResponseModel(
-                            fullName = document.data?.get(
-                                "fullName"
-                            ).toString(), email = document.data?.get("email").toString()
+                            fullName = document.data?.get("fullName").toString(),
+                            email = document.data?.get("email").toString(),
+                            groupUidList = document.data?.get("groups") as MutableList<String>
                         )
                     )
                 )
@@ -78,7 +78,7 @@ class GroupListViewModel @Inject constructor(
             val result = firestoreRepository.getGroupsByUserUid(userUid)
             result.addOnSuccessListener { documentSnapshot ->
 
-                if (documentSnapshot.exists()){
+                if (documentSnapshot.exists()) {
                     val fieldValue = documentSnapshot.get("groups") as? List<String>
                     fieldValue?.let { list ->
                         for (groupUid in list) {

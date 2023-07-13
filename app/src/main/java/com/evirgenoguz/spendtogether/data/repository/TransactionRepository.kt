@@ -14,42 +14,49 @@ class TransactionRepository : TransactionService {
         Expense(
             100,
             "f5zKj8ycoUgnbOPddbSIsdHDBf22",
+            "oguz evirgen",
             "mYnbxAVSbQw3IcCbryvk",
             "Market"
         ),
         Expense(
             80,
             "f5zKj8ycoUgnbOPddbSIsdHDBf22",
+            "oguz evirgen",
             "mYnbxAVSbQw3IcCbryvk",
             "Pazar"
         ),
         Expense(
             20,
             "f5zKj8ycoUgnbOPddbSIsdHDBf22",
+            "oguz evirgen",
             "mYnbxAVSbQw3IcCbryvk",
             "Ivir Zivir"
         ),
         Expense(
             250,
             "f5zKj8ycoUgnbOPddbSIsdHDBf22",
+            "oguz evirgen",
             "mYnbxAVSbQw3IcCbryvk",
             "Teknoloji"
         ),
         Expense(
             100,
             "0IZirRc7OdW2kjvYrRyaSZ8Y3up2",
+            "Test Test",
             "mYnbxAVSbQw3IcCbryvk",
             "Market"
         ),
         Expense(
             100,
             "0IZirRc7OdW2kjvYrRyaSZ8Y3up2",
+            "Test Test",
             "mYnbxAVSbQw3IcCbryvk",
             "Market"
         ),
         Expense(
             100,
             "0IZirRc7OdW2kjvYrRyaSZ8Y3up2",
+            "Test Test",
             "mYnbxAVSbQw3IcCbryvk",
             "Market"
         )

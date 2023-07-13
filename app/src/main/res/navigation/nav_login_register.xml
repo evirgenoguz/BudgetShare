@@ -98,5 +98,13 @@
         <argument
             android:name="groupUid"
             app:argType="string" />
+        <action
+            android:id="@+id/action_expenseFragment_to_createExpenseFragment"
+            app:destination="@id/createExpenseFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/createExpenseFragment"
+        android:name="com.evirgenoguz.spendtogether.ui.feature.create_expense.CreateExpenseFragment"
+        android:label="fragment_create_expense"
+        tools:layout="@layout/fragment_create_expense" />
 </navigation>

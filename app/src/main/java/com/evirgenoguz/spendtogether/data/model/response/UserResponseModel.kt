@@ -7,5 +7,6 @@ package com.evirgenoguz.spendtogether.data.model.response
 
 data class UserResponseModel(
     val fullName: String,
-    val email: String
+    val email: String,
+    val groupUidList: MutableList<String>
 )

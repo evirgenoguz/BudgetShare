@@ -25,7 +25,7 @@ class ExpenseAdapter : RecyclerView.Adapter<ExpenseAdapter.ExpenseListViewHolder
         fun bind(expense: Expense) {
             binding.textViewPaidBy.text = buildString {
                 append("Paid by ")
-                append(expense.expenseOwnerUid)
+                append(expense.expenseOwnerFullName)
             }
             binding.textViewExpenseDescription.text = expense.description
             binding.textViewAmount.text = expense.amount.toString()
