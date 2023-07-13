@@ -2,4 +2,33 @@
     <string name="app_name">SpendTogether</string>
     <string name="not_connected_try_again">Not connected try again</string>
     <string name="general_error_message">Error!</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    <!-- General -->
+    <string name="spend_together">Spend Together</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="password">Password</string>
+
+    <!-- Start -->
+    <string name="start_dont_have_an_account">Don\'t have an account?   </string>
+
+
+    <!-- Login -->
+    <string name="create_spend">Create or join a group and spend it your way</string>
+    <string name="e_mail">E - mail</string>
+
+
+    <!-- Login -->
+    <string name="register_do_you_have_an_account">Do you have an account?\t</string>
+    <string name="fullname">Fullname</string>
+    <string name="add_group">add group</string>
+    <string name="profile">Profile</string>
+    <string name="log_out">Log out</string>
+    <string name="keep_me_logged_in">Keep me logged in</string>
+    <string name="create_group">Create Group</string>
+    <string name="group_name">Group Name</string>
+    <string name="create">Create</string>
 </resources>
