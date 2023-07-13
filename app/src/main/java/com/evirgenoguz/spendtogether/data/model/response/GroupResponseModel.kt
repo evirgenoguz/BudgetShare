@@ -6,5 +6,7 @@ package com.evirgenoguz.spendtogether.data.model.response
  */
 
 data class GroupResponseModel(
-    val groupUid: String
+    val groupUid: String,
+    val groupName: String,
+    val groupOwnerUid: String
 )

@@ -2,7 +2,6 @@ package com.evirgenoguz.spendtogether.ui.feature.login
 
 import android.util.Log
 import android.view.LayoutInflater
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -12,7 +11,6 @@ import com.evirgenoguz.spendtogether.data.model.request.LoginRequestModel
 import com.evirgenoguz.spendtogether.databinding.FragmentLoginBinding
 import com.evirgenoguz.spendtogether.ext.observeLiveData
 import com.evirgenoguz.spendtogether.ext.safeNavigation
-import com.evirgenoguz.spendtogether.ext.toast
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -54,7 +52,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
                 when (it) {
                     is NetworkResult.Loading -> {
                         //Todo add dialog for loading
-                        toast("Loading state")
+                        Log.d(TAG, "Loading")
                     }
 
                     is NetworkResult.Success -> {
@@ -62,11 +60,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
                             viewModel.saveUserUidToSharedPref(it.body.uid)
                         }
                         findNavController().safeNavigation(LoginFragmentDirections.actionLoginFragmentToGroupListFragment())
-                        Toast.makeText(
-                            context,
-                            "${it.body.uid} successfully login",
-                            Toast.LENGTH_LONG
-                        ).show()
+                        Log.d(TAG, "Succesfully Login : ${it.body.uid}")
                     }
 
                     is NetworkResult.Error -> {

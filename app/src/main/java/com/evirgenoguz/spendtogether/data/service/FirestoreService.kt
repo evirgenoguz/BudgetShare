@@ -13,11 +13,10 @@ import com.google.firebase.firestore.DocumentSnapshot
 interface FirestoreService {
 
     fun getUser(userUid: String): Task<DocumentSnapshot>
-    fun getGroupsByUserUid(userUid: String): Task<DocumentSnapshot>
+    fun getUserGroups(userUid: String): Task<DocumentSnapshot>
     fun createGroup(createGroupRequestModel: CreateGroupRequestModel): Task<DocumentReference>
-
+    fun getGroupByGroupUid(groupUid: String): Task<DocumentSnapshot>
     fun deleteGroup(groupUid: String)
-
     fun joinGroup(groupUid: String)
 
 }

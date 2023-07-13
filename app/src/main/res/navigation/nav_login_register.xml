@@ -57,6 +57,9 @@
         <action
             android:id="@+id/action_groupListFragment_to_createGroupFragment"
             app:destination="@id/createGroupFragment" />
+        <action
+            android:id="@+id/action_groupListFragment_to_expenseFragment"
+            app:destination="@id/expenseFragment" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
@@ -72,4 +75,36 @@
         android:name="com.evirgenoguz.spendtogether.ui.feature.create_group.CreateGroupFragment"
         android:label="fragment_create_group"
         tools:layout="@layout/fragment_create_group" />
+    <fragment
+        android:id="@+id/balanceFragment"
+        android:name="com.evirgenoguz.spendtogether.ui.feature.balance.BalanceFragment"
+        android:label="fragment_balance"
+        tools:layout="@layout/fragment_balance" >
+        <action
+            android:id="@+id/action_balanceFragment_to_expenseFragment"
+            app:destination="@id/expenseFragment" />
+        <argument
+            android:name="balance"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/expenseFragment"
+        android:name="com.evirgenoguz.spendtogether.ui.feature.expense.ExpenseFragment"
+        android:label="fragment_expense"
+        tools:layout="@layout/fragment_expense" >
+        <action
+            android:id="@+id/action_expenseFragment_to_balanceFragment"
+            app:destination="@id/balanceFragment" />
+        <argument
+            android:name="groupUid"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_expenseFragment_to_createExpenseFragment"
+            app:destination="@id/createExpenseFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/createExpenseFragment"
+        android:name="com.evirgenoguz.spendtogether.ui.feature.create_expense.CreateExpenseFragment"
+        android:label="fragment_create_expense"
+        tools:layout="@layout/fragment_create_expense" />
 </navigation>

@@ -3,6 +3,7 @@ package com.evirgenoguz.spendtogether.di
 import android.content.Context
 import com.evirgenoguz.spendtogether.BuildConfig
 import com.evirgenoguz.spendtogether.data.NetworkManager
+import com.evirgenoguz.spendtogether.data.service.api.CurrencyApi
 import com.evirgenoguz.spendtogether.utils.Constants
 import dagger.Module
 import dagger.Provides
@@ -59,5 +60,9 @@ object NetworkModule {
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
+
+    @Provides
+    @Singleton
+    fun provideCurrencyApi(client: Retrofit): CurrencyApi = client.create(CurrencyApi::class.java)
 
 }

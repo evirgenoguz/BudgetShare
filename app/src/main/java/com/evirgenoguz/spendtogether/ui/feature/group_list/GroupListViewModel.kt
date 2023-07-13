@@ -39,18 +39,22 @@ class GroupListViewModel @Inject constructor(
         viewModelScope.launch {
             _user.postValue(NetworkResult.Loading)
             firestoreRepository.getUser(userUid).addOnSuccessListener { document ->
-                Log.d("Deneme", document.data?.get("fullName").toString())
+                Log.d("Deneme", document.data?.get("groups").toString())
                 _user.postValue(
                     NetworkResult.Success(
                         UserResponseModel(
-                            fullName = document.data?.get(
-                                "fullName"
-                            ).toString(), email = document.data?.get("email").toString()
+                            fullName = document.data?.get("fullName").toString(),
+                            email = document.data?.get("email").toString(),
+                            groupUidList = document.data?.get("groups") as MutableList<String>
                         )
                     )
                 )
             }.addOnFailureListener {
-
+                NetworkResult.Error(
+                    ServerErrorModel(
+                        it.localizedMessage ?: "An error occurred"
+                    )
+                )
             }
         }
     }
@@ -75,17 +79,28 @@ class GroupListViewModel @Inject constructor(
         val groupResponseModelList = mutableListOf<GroupResponseModel>()
         viewModelScope.launch {
             _groupList.postValue(NetworkResult.Loading)
-            val result = firestoreRepository.getGroupsByUserUid(userUid)
+            val result = firestoreRepository.getUserGroups(userUid)
             result.addOnSuccessListener { documentSnapshot ->
-                if (documentSnapshot.exists()){
+
+                if (documentSnapshot.exists()) {
                     val fieldValue = documentSnapshot.get("groups") as? List<String>
                     fieldValue?.let { list ->
                         for (groupUid in list) {
-                            groupResponseModelList.add(GroupResponseModel(groupUid))
+                            getGroupByGroupId(groupUid)
+                            groupResponseModelList.add(GroupResponseModel(groupUid, "Ev", userUid))
                         }
                     }
                 }
                 _groupList.postValue(NetworkResult.Success(groupResponseModelList))
+            }
+        }
+    }
+
+    private fun getGroupByGroupId(groupUid: String) {
+        viewModelScope.launch {
+            val result = firestoreRepository.getGroupByGroupUid(groupUid)
+            result.addOnSuccessListener {
+
             }
         }
     }

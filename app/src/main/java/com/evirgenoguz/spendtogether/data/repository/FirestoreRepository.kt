@@ -22,9 +22,15 @@ class FirestoreRepository @Inject constructor(
         return fireStore.collection(USER_COLLECTION).document(userUid).get()
     }
 
-    override fun getGroupsByUserUid(userUid: String): Task<DocumentSnapshot> {
+    override fun getUserGroups(userUid: String): Task<DocumentSnapshot> {
         return fireStore.collection(USER_COLLECTION).document(userUid).get()
     }
+
+    override fun getGroupByGroupUid(groupUid: String): Task<DocumentSnapshot> {
+        return fireStore.collection(COLLECTION_GROUP).document(groupUid).get()
+    }
+
+
 
     override fun createGroup(createGroupRequestModel: CreateGroupRequestModel): Task<DocumentReference> {
         var groupUid: String
