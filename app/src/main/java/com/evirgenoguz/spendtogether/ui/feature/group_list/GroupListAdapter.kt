@@ -16,7 +16,7 @@ class GroupListAdapter : RecyclerView.Adapter<GroupListAdapter.GroupListViewHold
     var onItemClick: ((GroupResponseModel) -> Unit)? = null
     private var groupList = listOf<GroupResponseModel>()
 
-    fun setGroupList(groupList: List<GroupResponseModel>?){
+    fun setGroupList(groupList: List<GroupResponseModel>?) {
         this.groupList = groupList ?: emptyList()
         notifyDataSetChanged()
     }
