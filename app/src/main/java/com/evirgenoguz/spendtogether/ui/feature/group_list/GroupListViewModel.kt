@@ -23,8 +23,8 @@ class GroupListViewModel @Inject constructor(
     private val sharedPrefManager: SharedPrefManager
 ) : BaseViewModel() {
 
-    private val _groups = MutableLiveData<NetworkResult<GroupResponseModel>>()
-    val groups: LiveData<NetworkResult<GroupResponseModel>> = _groups
+    private val _groupList = MutableLiveData<NetworkResult<List<GroupResponseModel>>>()
+    val groupList: LiveData<NetworkResult<List<GroupResponseModel>>> = _groupList
 
 
     private val _user = MutableLiveData<NetworkResult<UserResponseModel>>()
@@ -34,6 +34,7 @@ class GroupListViewModel @Inject constructor(
         getUser(sharedPrefManager.getUId())
         getGroupsByUserUid(sharedPrefManager.getUId())
     }
+
     private fun getUser(userUid: String) {
         viewModelScope.launch {
             _user.postValue(NetworkResult.Loading)
@@ -56,16 +57,10 @@ class GroupListViewModel @Inject constructor(
 
     fun createGroup(createGroupRequestModel: CreateGroupRequestModel) {
         viewModelScope.launch {
-            _groups.postValue(NetworkResult.Loading)
+            _groupList.postValue(NetworkResult.Loading)
             val result = firestoreRepository.createGroup(createGroupRequestModel)
             result.addOnSuccessListener {
-                _groups.postValue(
-                    NetworkResult.Success(
-                        GroupResponseModel(
-                            groupUid = it.id
-                        )
-                    )
-                )
+
             }.addOnFailureListener {
                 NetworkResult.Error(
                     ServerErrorModel(
@@ -77,30 +72,20 @@ class GroupListViewModel @Inject constructor(
     }
 
     private fun getGroupsByUserUid(userUid: String) {
+        val groupResponseModelList = mutableListOf<GroupResponseModel>()
         viewModelScope.launch {
-            _groups.postValue(NetworkResult.Loading)
+            _groupList.postValue(NetworkResult.Loading)
             val result = firestoreRepository.getGroupsByUserUid(userUid)
-            result.addOnSuccessListener {
-
-                for (document in it) {
-                    if (document.data.containsValue(userUid)) {
-                        Log.d("Deneme", document.id)
-                        _groups.postValue(
-                            NetworkResult.Success(
-                                GroupResponseModel(
-                                    groupUid = document.id
-                                )
-                            )
-                        )
+            result.addOnSuccessListener { documentSnapshot ->
+                if (documentSnapshot.exists()){
+                    val fieldValue = documentSnapshot.get("groups") as? List<String>
+                    fieldValue?.let { list ->
+                        for (groupUid in list) {
+                            groupResponseModelList.add(GroupResponseModel(groupUid))
+                        }
                     }
                 }
-
-            }.addOnFailureListener {
-                NetworkResult.Error(
-                    ServerErrorModel(
-                        it.localizedMessage ?: "An error occurred"
-                    )
-                )
+                _groupList.postValue(NetworkResult.Success(groupResponseModelList))
             }
         }
     }

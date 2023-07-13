@@ -54,6 +54,9 @@
         <action
             android:id="@+id/action_groupListFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
+        <action
+            android:id="@+id/action_groupListFragment_to_createGroupFragment"
+            app:destination="@id/createGroupFragment" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
@@ -64,4 +67,9 @@
             android:id="@+id/action_profileFragment_to_startFragment"
             app:destination="@id/startFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/createGroupFragment"
+        android:name="com.evirgenoguz.spendtogether.ui.feature.create_group.CreateGroupFragment"
+        android:label="fragment_create_group"
+        tools:layout="@layout/fragment_create_group" />
 </navigation>

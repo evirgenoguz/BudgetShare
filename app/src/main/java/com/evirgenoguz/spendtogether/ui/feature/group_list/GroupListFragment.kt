@@ -6,7 +6,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.evirgenoguz.spendtogether.R
 import com.evirgenoguz.spendtogether.core.BaseFragment
-import com.evirgenoguz.spendtogether.data.model.request.CreateGroupRequestModel
 import com.evirgenoguz.spendtogether.databinding.FragmentGroupListBinding
 import com.evirgenoguz.spendtogether.ext.observeLiveData
 import com.evirgenoguz.spendtogether.ext.toast
@@ -20,13 +19,38 @@ class GroupListFragment : BaseFragment<FragmentGroupListBinding>() {
 
     private val viewModel by viewModels<GroupListViewModel>()
     private val sharedViewModel by activityViewModels<MainViewModel>()
+
+    private lateinit var groupListAdapter: GroupListAdapter
     override fun setupUi() {
         initListeners()
+        prepareAdapter()
+
         observeEvents()
+        observeGroupListLiveData()
+    }
+
+    private fun prepareAdapter() {
+        groupListAdapter = GroupListAdapter()
+        binding.recyclerViewGroup.apply {
+            adapter = groupListAdapter
+        }
+    }
+
+    private fun observeGroupListLiveData() {
+        observeLiveData(viewModel.groupList) {
+            it.onLoading {
+                //Todo loading animation
+                toast("Loading")
+            }
+            it.onSuccess {
+                groupListAdapter.setGroupList(it)
+            }
+            it.onError { toast(it.message) }
+        }
     }
 
     private fun observeEvents() {
-        observeLiveData(viewModel.user){
+        observeLiveData(viewModel.user) {
             it.onSuccess {
                 sharedViewModel.setCurrentUser(it)
             }.onError {
@@ -38,22 +62,22 @@ class GroupListFragment : BaseFragment<FragmentGroupListBinding>() {
     }
 
     private fun initListeners() {
-        binding.toolBar.inflateMenu(R.menu.menu_group_list)
-        binding.toolBar.setOnMenuItemClickListener {
-            when(it.itemId){
-                R.id.action_profile -> {
-                    findNavController().navigate(GroupListFragmentDirections.actionGroupListFragmentToProfileFragment())
-                    true
+        binding.toolBar.apply {
+            inflateMenu(R.menu.menu_group_list)
+            setOnMenuItemClickListener {
+                when (it.itemId) {
+                    R.id.action_profile -> {
+                        findNavController().navigate(GroupListFragmentDirections.actionGroupListFragmentToProfileFragment())
+                        true
+                    }
+
+                    else -> false
                 }
-                else -> false
             }
+            setTitle(R.string.app_name)
         }
-        binding.toolBar.setTitle(R.string.app_name)
-
-
         binding.fabAddGroup.setOnClickListener {
-
-            viewModel.createGroup(CreateGroupRequestModel("test", "f5zKj8ycoUgnbOPddbSIsdHDBf22"))
+            findNavController().navigate(GroupListFragmentDirections.actionGroupListFragmentToCreateGroupFragment())
         }
     }
 
