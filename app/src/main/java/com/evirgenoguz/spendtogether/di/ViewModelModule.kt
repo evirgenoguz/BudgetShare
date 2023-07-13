@@ -1,6 +1,7 @@
 package com.evirgenoguz.spendtogether.di
 
 import com.evirgenoguz.spendtogether.data.repository.AuthRepository
+import com.evirgenoguz.spendtogether.data.repository.TransactionRepository
 import com.google.firebase.auth.FirebaseAuth
 import dagger.Module
 import dagger.Provides
@@ -23,6 +24,11 @@ object ViewModelModule {
     fun provideAuthRepository(
         firebaseAuth: FirebaseAuth
     ): AuthRepository = AuthRepository(firebaseAuth)
+
+
+    @Provides
+    @ViewModelScoped
+    fun provideTransactionRepository(): TransactionRepository = TransactionRepository()
 
 
 }

@@ -24,4 +24,14 @@
     <!-- Login -->
     <string name="register_do_you_have_an_account">Do you have an account?\t</string>
     <string name="fullname">Fullname</string>
+    <string name="add_group">add group</string>
+    <string name="profile">Profile</string>
+    <string name="log_out">Log out</string>
+    <string name="keep_me_logged_in">Keep me logged in</string>
+    <string name="create_group">Create Group</string>
+    <string name="group_name">Group Name</string>
+    <string name="create">Create</string>
+    <string name="balance">Balance</string>
+    <string name="expenses">Expenses</string>
+    <string name="your_balance_is">Your Balance Is</string>
 </resources>

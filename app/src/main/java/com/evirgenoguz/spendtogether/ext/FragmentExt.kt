@@ -25,7 +25,6 @@ fun Fragment.toast(@StringRes message: Int) {
  */
 
 fun <T> Fragment.observeLiveData(liveData: LiveData<T>, block: (T) -> Unit){
-
     liveData.observe(viewLifecycleOwner){
         it?.let(block)
     }

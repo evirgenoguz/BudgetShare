@@ -1,5 +1,6 @@
 package com.evirgenoguz.spendtogether.ui.feature.start
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -16,6 +17,13 @@ class StartFragment : BaseFragment<FragmentStartBinding>() {
 
     override fun setupUi() {
         initListeners()
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        if (viewModel.isUidNotEmpty()) {
+            findNavController().navigate(StartFragmentDirections.actionStartFragmentToGroupListFragment())
+        }
     }
 
     private fun initListeners() {

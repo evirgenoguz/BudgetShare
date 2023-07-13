@@ -2,7 +2,6 @@ package com.evirgenoguz.spendtogether.ui.feature.login
 
 import android.util.Log
 import android.view.LayoutInflater
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -11,7 +10,7 @@ import com.evirgenoguz.spendtogether.data.NetworkResult
 import com.evirgenoguz.spendtogether.data.model.request.LoginRequestModel
 import com.evirgenoguz.spendtogether.databinding.FragmentLoginBinding
 import com.evirgenoguz.spendtogether.ext.observeLiveData
-import com.evirgenoguz.spendtogether.ext.toast
+import com.evirgenoguz.spendtogether.ext.safeNavigation
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -52,16 +51,16 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
             observeLiveData(viewModel.login) {
                 when (it) {
                     is NetworkResult.Loading -> {
-
+                        //Todo add dialog for loading
+                        Log.d(TAG, "Loading")
                     }
 
                     is NetworkResult.Success -> {
-                        // TODO: navigate inside the app with uid
-                        Toast.makeText(
-                            context,
-                            "${it.body.uid} successfully login",
-                            Toast.LENGTH_LONG
-                        ).show()
+                        if (binding.checkBoxKeepMeLoggedIn.isChecked) {
+                            viewModel.saveUserUidToSharedPref(it.body.uid)
+                        }
+                        findNavController().safeNavigation(LoginFragmentDirections.actionLoginFragmentToGroupListFragment())
+                        Log.d(TAG, "Succesfully Login : ${it.body.uid}")
                     }
 
                     is NetworkResult.Error -> {
