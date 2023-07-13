@@ -41,6 +41,8 @@ class GroupListFragment : BaseFragment<FragmentGroupListBinding>() {
         groupListAdapter.onItemClick = { group ->
             Log.d("GroupListAdapter", group.groupUid)
             //Todo navigate to transactions page
+            findNavController().navigate(GroupListFragmentDirections.actionGroupListFragmentToExpenseFragment(group.groupUid))
+
         }
     }
 
