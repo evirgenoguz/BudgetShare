@@ -23,7 +23,10 @@ class ExpenseAdapter : RecyclerView.Adapter<ExpenseAdapter.ExpenseListViewHolder
         private val binding: ItemExpenseBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(expense: Expense) {
-            binding.textViewPaidBy.text = "Paid by ${expense.expenseOwnerUid}"
+            binding.textViewPaidBy.text = buildString {
+                append("Paid by ")
+                append(expense.expenseOwnerUid)
+            }
             binding.textViewExpenseDescription.text = expense.description
             binding.textViewAmount.text = expense.amount.toString()
         }
