@@ -13,6 +13,7 @@ import com.evirgenoguz.spendtogether.databinding.ItemGroupBinding
 
 class GroupListAdapter : RecyclerView.Adapter<GroupListAdapter.GroupListViewHolder>() {
 
+    var onItemClick: ((GroupResponseModel) -> Unit)? = null
     private var groupList = listOf<GroupResponseModel>()
 
     fun setGroupList(groupList: List<GroupResponseModel>?){
@@ -25,6 +26,10 @@ class GroupListAdapter : RecyclerView.Adapter<GroupListAdapter.GroupListViewHold
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(group: GroupResponseModel) {
             binding.textViewGroupName.text = group.groupUid
+
+            itemView.setOnClickListener {
+                onItemClick!!.invoke(group)
+            }
         }
     }
 

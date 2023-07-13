@@ -1,5 +1,6 @@
 package com.evirgenoguz.spendtogether.ui.feature.group_list
 
+import android.util.Log
 import android.view.LayoutInflater
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -24,15 +25,22 @@ class GroupListFragment : BaseFragment<FragmentGroupListBinding>() {
     override fun setupUi() {
         initListeners()
         prepareAdapter()
-
         observeEvents()
         observeGroupListLiveData()
+        onGroupClick()
     }
 
     private fun prepareAdapter() {
         groupListAdapter = GroupListAdapter()
         binding.recyclerViewGroup.apply {
             adapter = groupListAdapter
+        }
+    }
+
+    private fun onGroupClick() {
+        groupListAdapter.onItemClick = { group ->
+            Log.d("GroupListAdapter", group.groupUid)
+            //Todo navigate to transactions page
         }
     }
 
