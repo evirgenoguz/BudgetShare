@@ -2,7 +2,6 @@ package com.evirgenoguz.spendtogether.ui.feature.register
 
 import android.util.Log
 import android.view.LayoutInflater
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -11,7 +10,6 @@ import com.evirgenoguz.spendtogether.data.NetworkResult
 import com.evirgenoguz.spendtogether.data.model.request.RegisterRequestModel
 import com.evirgenoguz.spendtogether.databinding.FragmentRegisterBinding
 import com.evirgenoguz.spendtogether.ext.observeLiveData
-import com.evirgenoguz.spendtogether.ext.toast
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -33,7 +31,7 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>() {
                 when (it) {
                     is NetworkResult.Loading -> {
                         //Todo loading dialog
-                        toast("Loading")
+                        Log.d(TAG, "Loading")
                     }
 
                     is NetworkResult.Success -> {
@@ -41,16 +39,11 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>() {
                             viewModel.saveUserUidToSharedPref(it.body.uid)
                         }
                         findNavController().navigate(RegisterFragmentDirections.actionRegisterFragmentToGroupListFragment())
-                        Toast.makeText(
-                            context,
-                            "${it.body.uid} successfully auth",
-                            Toast.LENGTH_LONG
-                        ).show()
+                        Log.d(TAG, "Successfully auth: ${it.body.uid}")
                     }
 
                     is NetworkResult.Error -> {
-                        toast(it.error.message)
-                        Log.e("Register Fragment", it.error.message)
+                        Log.e(TAG, it.error.message)
                     }
                 }
             }

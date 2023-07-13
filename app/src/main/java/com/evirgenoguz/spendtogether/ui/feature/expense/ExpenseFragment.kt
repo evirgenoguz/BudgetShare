@@ -1,12 +1,13 @@
 package com.evirgenoguz.spendtogether.ui.feature.expense
 
+import android.util.Log
 import android.view.LayoutInflater
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.evirgenoguz.spendtogether.R
 import com.evirgenoguz.spendtogether.core.BaseFragment
 import com.evirgenoguz.spendtogether.databinding.FragmentExpenseBinding
 import com.evirgenoguz.spendtogether.ext.observeLiveData
-import com.evirgenoguz.spendtogether.ext.toast
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -18,6 +19,10 @@ class ExpenseFragment : BaseFragment<FragmentExpenseBinding>() {
 
     private lateinit var expenseAdapter: ExpenseAdapter
 
+    private var userExpense = 0
+    private var expenseSum = 0
+    private val distinctUser = mutableSetOf<String>()
+
 
     override fun setupUi() {
         initListeners()
@@ -26,19 +31,26 @@ class ExpenseFragment : BaseFragment<FragmentExpenseBinding>() {
         observeExpenseLiveData()
 
 
-
     }
 
     private fun observeExpenseLiveData() {
         observeLiveData(viewModel.expenseList) {
             it.onLoading {
                 //Todo loading animation
-                toast("Loading")
+                Log.d(TAG, "Loading")
             }
             it.onSuccess {
+                it.forEach{
+                    expenseSum += it.amount
+                    if (viewModel.userUid == it.expenseOwnerUid){
+                        userExpense += it.amount
+                    }
+                    expenseSum += it.amount
+                    distinctUser.add(it.expenseOwnerUid)
+                }
                 expenseAdapter.setExpenseList(it)
             }
-            it.onError { toast(it.message) }
+            it.onError { Log.d(TAG, it.message) }
         }
     }
 
@@ -53,7 +65,8 @@ class ExpenseFragment : BaseFragment<FragmentExpenseBinding>() {
             setOnMenuItemClickListener {
                 when (it.itemId) {
                     R.id.action_balance -> {
-//                        findNavController().navigate(ExpenseFragmentDirections.actionExpenseFragmentToBalanceFragment())
+                        val argumentValue = (userExpense - (expenseSum / distinctUser.size))
+                        findNavController().navigate(ExpenseFragmentDirections.actionExpenseFragmentToBalanceFragment(argumentValue))
                         true
                     }
 

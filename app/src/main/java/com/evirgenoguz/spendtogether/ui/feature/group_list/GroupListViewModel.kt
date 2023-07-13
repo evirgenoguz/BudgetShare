@@ -77,11 +77,12 @@ class GroupListViewModel @Inject constructor(
             _groupList.postValue(NetworkResult.Loading)
             val result = firestoreRepository.getGroupsByUserUid(userUid)
             result.addOnSuccessListener { documentSnapshot ->
+
                 if (documentSnapshot.exists()){
                     val fieldValue = documentSnapshot.get("groups") as? List<String>
                     fieldValue?.let { list ->
                         for (groupUid in list) {
-                            groupResponseModelList.add(GroupResponseModel(groupUid))
+                            groupResponseModelList.add(GroupResponseModel(groupUid, "Ev"))
                         }
                     }
                 }

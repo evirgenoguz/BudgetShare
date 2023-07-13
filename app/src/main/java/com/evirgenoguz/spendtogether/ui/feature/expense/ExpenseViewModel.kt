@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.evirgenoguz.spendtogether.core.BaseViewModel
 import com.evirgenoguz.spendtogether.data.NetworkResult
+import com.evirgenoguz.spendtogether.data.local.SharedPrefManager
 import com.evirgenoguz.spendtogether.data.mock.Expense
 import com.evirgenoguz.spendtogether.data.repository.TransactionRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -14,12 +15,17 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ExpenseViewModel @Inject constructor(
-    private val transactionRepository: TransactionRepository
+    private val transactionRepository: TransactionRepository,
+    private val sharedPrefManager: SharedPrefManager
 ) : BaseViewModel() {
 
     private val _expenseList = MutableLiveData<NetworkResult<List<Expense>>>()
     val expenseList: LiveData<NetworkResult<List<Expense>>> = _expenseList
+    var userUid = ""
 
+    init {
+        userUid = sharedPrefManager.getUId()
+    }
 
 
     fun getExpenseByGroupUid(groupUid: String) {

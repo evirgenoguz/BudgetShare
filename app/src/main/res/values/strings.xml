@@ -33,4 +33,5 @@
     <string name="create">Create</string>
     <string name="balance">Balance</string>
     <string name="expenses">Expenses</string>
+    <string name="your_balance_is">Your Balance Is</string>
 </resources>

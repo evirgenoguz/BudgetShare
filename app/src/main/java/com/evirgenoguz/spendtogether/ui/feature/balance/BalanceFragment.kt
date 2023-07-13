@@ -11,7 +11,17 @@ class BalanceFragment : BaseFragment<FragmentBalanceBinding>() {
         get() = FragmentBalanceBinding::inflate
 
     override fun setupUi() {
+        initListeners()
+    }
 
+    private fun initListeners() {
+        var balanceText = ""
+        if ((arguments?.getInt("balance") ?: 0) > 0){
+            balanceText = " +${arguments?.getInt("balance")}"
+        } else {
+            balanceText = arguments?.getInt("balance").toString()
+        }
+        binding.textViewbalance.text = balanceText
     }
 
 

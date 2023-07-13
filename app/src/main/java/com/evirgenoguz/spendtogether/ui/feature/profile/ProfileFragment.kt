@@ -8,7 +8,6 @@ import androidx.navigation.fragment.findNavController
 import com.evirgenoguz.spendtogether.core.BaseFragment
 import com.evirgenoguz.spendtogether.databinding.FragmentProfileBinding
 import com.evirgenoguz.spendtogether.ext.observeLiveData
-import com.evirgenoguz.spendtogether.ext.toast
 import com.evirgenoguz.spendtogether.ui.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -35,7 +34,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
         observeLiveData(viewModel.currency) {
             it.onLoading {
                 //Todo add dialog for loading
-                toast("Loading state")
+                Log.d(TAG, "Loading")
             }
             it.onSuccess {
                 binding.apply {

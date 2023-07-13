@@ -9,7 +9,6 @@ import com.evirgenoguz.spendtogether.R
 import com.evirgenoguz.spendtogether.core.BaseFragment
 import com.evirgenoguz.spendtogether.databinding.FragmentGroupListBinding
 import com.evirgenoguz.spendtogether.ext.observeLiveData
-import com.evirgenoguz.spendtogether.ext.toast
 import com.evirgenoguz.spendtogether.ui.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -50,12 +49,12 @@ class GroupListFragment : BaseFragment<FragmentGroupListBinding>() {
         observeLiveData(viewModel.groupList) {
             it.onLoading {
                 //Todo loading animation
-                toast("Loading")
+               Log.d(TAG, "Loading")
             }
             it.onSuccess {
                 groupListAdapter.setGroupList(it)
             }
-            it.onError { toast(it.message) }
+            it.onError { Log.d(TAG, it.message) }
         }
     }
 
@@ -64,7 +63,7 @@ class GroupListFragment : BaseFragment<FragmentGroupListBinding>() {
             it.onSuccess {
                 sharedViewModel.setCurrentUser(it)
             }.onError {
-                toast(it.message)
+                Log.d(TAG, it.message)
             }.onLoading {
 
             }

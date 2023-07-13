@@ -83,6 +83,9 @@
         <action
             android:id="@+id/action_balanceFragment_to_expenseFragment"
             app:destination="@id/expenseFragment" />
+        <argument
+            android:name="balance"
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/expenseFragment"
